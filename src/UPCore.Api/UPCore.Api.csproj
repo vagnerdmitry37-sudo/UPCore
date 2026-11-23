@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <UserSecretsId>4f9c2e7a-8d31-4b6e-a5c0-2e17d9b3f846</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UPCore.Application\UPCore.Application.csproj" />
+    <ProjectReference Include="..\UPCore.Infrastructure\UPCore.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/UPCore.Api/UPCore.Api.csproj" />
+    <Project Path="src/UPCore.Application/UPCore.Application.csproj" />
+    <Project Path="src/UPCore.Domain/UPCore.Domain.csproj" />
+    <Project Path="src/UPCore.Infrastructure/UPCore.Infrastructure.csproj" />
+  </Folder>
+</Solution>

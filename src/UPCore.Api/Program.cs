@@ -1,0 +1,11 @@
+using UPCore.Infrastructure;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddInfrastructure();
+
+var app = builder.Build();
+
+app.UseHttpsRedirection();
+
+app.Run();

@@ -1,0 +1,41 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+
+using UPCore.Infrastructure.Persistence;
+
+namespace UPCore.Infrastructure;
+
+public static class DependencyInjection
+{
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+    {
+        services.AddOptions<DatabaseOptions>()
+            .BindConfiguration(DatabaseOptions.SectionName)
+            .Validate(options =>
+                !string.IsNullOrWhiteSpace(options.ConnectionString),
+                "Database connection string must be configured.")
+            .Validate(options =>
+                options.MaxRetryCount is >= 0 and <= 10,
+                "Database max retry count must be between 0 and 10.")
+            .Validate(options =>
+                options.CommandTimeoutSeconds is >= 1 and <= 600,
+                "Database command timeout must be between 1 and 600 seconds.")
+            .ValidateOnStart();
+
+        services.AddDbContext<AppDbContext>((serviceProvider, options) =>
+        {
+            DatabaseOptions database = serviceProvider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
+
+            options.UseNpgsql(database.ConnectionString, npgsql =>
+            {
+                npgsql.EnableRetryOnFailure(database.MaxRetryCount);
+                npgsql.CommandTimeout(database.CommandTimeoutSeconds);
+            });
+
+            options.EnableSensitiveDataLogging(database.EnableSensitiveDataLogging);
+        });
+
+        return services;
+    }
+}
