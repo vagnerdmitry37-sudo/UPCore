@@ -2,7 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
+using UPCore.Application.UpEntities;
+using UPCore.Application.UpEntityTemplates;
 using UPCore.Infrastructure.Persistence;
+using UPCore.Infrastructure.UpEntities;
+using UPCore.Infrastructure.UpEntityTemplates;
 
 namespace UPCore.Infrastructure;
 
@@ -35,6 +39,9 @@ public static class DependencyInjection
 
             options.EnableSensitiveDataLogging(database.EnableSensitiveDataLogging);
         });
+
+        services.AddScoped<IUpEntityService, UpEntityService>();
+        services.AddScoped<IUpEntityTemplateService, UpEntityTemplateService>();
 
         return services;
     }
